@@ -22,6 +22,9 @@
 		0A111111111111111111111D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A222222222222222222222E /* ExploreView.swift */; };
 		0A111111111111111111111E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A222222222222222222222F /* SettingsView.swift */; };
 		0A111111111111111111111F /* OuraInsightsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222230 /* OuraInsightsTests.swift */; };
+		0A1111111111111111111120 /* OuraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222235 /* OuraManager.swift */; };
+		0A1111111111111111111121 /* DataImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222236 /* DataImportService.swift */; };
+		0A1111111111111111111122 /* OuraServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222237 /* OuraServices.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		0A2222222222222222222232 /* OuraInsightsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OuraInsightsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2222222222222222222233 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2222222222222222222234 /* OuraInsights.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OuraInsights.entitlements; sourceTree = "<group>"; };
+		0A2222222222222222222235 /* OuraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuraManager.swift; sourceTree = "<group>"; };
+		0A2222222222222222222236 /* DataImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImportService.swift; sourceTree = "<group>"; };
+		0A2222222222222222222237 /* OuraServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuraServices.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 				0A2222222222222222222223 /* ContentView.swift */,
 				0A777777777777777777777B /* Data */,
 				0A777777777777777777777C /* Views */,
+				0A777777777777777777777E /* Services */,
 				0A2222222222222222222233 /* Info.plist */,
 				0A2222222222222222222234 /* OuraInsights.entitlements */,
 			);
@@ -145,6 +152,16 @@
 				0A2222222222222222222230 /* OuraInsightsTests.swift */,
 			);
 			path = OuraInsightsTests;
+			sourceTree = "<group>";
+		};
+		0A777777777777777777777E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0A2222222222222222222235 /* OuraManager.swift */,
+				0A2222222222222222222236 /* DataImportService.swift */,
+				0A2222222222222222222237 /* OuraServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +257,9 @@
 				0A111111111111111111111C /* TrendsView.swift in Sources */,
 				0A111111111111111111111D /* ExploreView.swift in Sources */,
 				0A111111111111111111111E /* SettingsView.swift in Sources */,
+				0A1111111111111111111120 /* OuraManager.swift in Sources */,
+				0A1111111111111111111121 /* DataImportService.swift in Sources */,
+				0A1111111111111111111122 /* OuraServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

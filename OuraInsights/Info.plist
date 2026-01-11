@@ -28,5 +28,16 @@
     <string>Use Face ID to secure your health data.</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.personal.oura-insights</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>oura-insights</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>

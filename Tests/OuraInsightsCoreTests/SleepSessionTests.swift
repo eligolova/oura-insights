@@ -25,7 +25,7 @@ final class SleepSessionTests: XCTestCase {
             totalSleepDuration: 25200 // 7 hours
         )
         
-        XCTAssertEqual(session.sleepDurationHours, 7.0, accuracy: 0.01)
+        XCTAssertEqual(session.sleepDurationHours!, 7.0, accuracy: 0.01)
     }
     
     func testSleepDurationHoursNil() {

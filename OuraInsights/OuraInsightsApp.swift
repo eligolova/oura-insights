@@ -4,6 +4,7 @@ import SwiftData
 @main
 struct OuraInsightsApp: App {
     let modelContainer: ModelContainer
+    @State private var ouraManager = OuraManager()
     
     init() {
         print("🚀 Oura Insights App initializing...")
@@ -36,6 +37,7 @@ struct OuraInsightsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(ouraManager)
         }
         .modelContainer(modelContainer)
         #if os(macOS)

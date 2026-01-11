@@ -9,11 +9,15 @@ import AppKit
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(OuraManager.self) private var ouraManager
     @Query private var ouraTokens: [OuraToken]
     
-    @State private var showingOuraAuth = false
     @State private var showingDeleteConfirmation = false
-    @State private var isRefreshing = false
+    @State private var showingCredentialsAlert = false
+    @State private var showingErrorAlert = false
+    @State private var errorMessage = ""
+    @State private var clientId = ""
+    @State private var clientSecret = ""
     
     var body: some View {
         NavigationStack {
@@ -27,19 +31,34 @@ struct SettingsView: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
             #endif
+            .alert("Oura API Credentials", isPresented: $showingCredentialsAlert) {
+                TextField("Client ID", text: $clientId)
+                SecureField("Client Secret", text: $clientSecret)
+                Button("Connect") {
+                    startOAuthFlow()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Enter your Oura API credentials from cloud.ouraring.com/oauth/applications")
+            }
+            .alert("Error", isPresented: $showingErrorAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
     
     private var ouraConnectionSection: some View {
         Section {
-            if let token = ouraTokens.first {
+            if ouraManager.isAuthenticated {
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
                     Text("Connected to Oura")
                     Spacer()
-                    if let expiresAt = token.expiresAt {
-                        Text(expiresAt, style: .relative)
+                    if let lastSync = ouraManager.lastSyncDate {
+                        Text("Synced \(lastSync, style: .relative) ago")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -56,13 +75,19 @@ struct SettingsView: View {
                 }
                 
                 Button("Connect Oura Ring") {
-                    showingOuraAuth = true
+                    showingCredentialsAlert = true
                 }
+            }
+            
+            if let authError = ouraManager.authError {
+                Text(authError)
+                    .font(.caption)
+                    .foregroundStyle(.red)
             }
         } header: {
             Text("Oura Connection")
         } footer: {
-            Text("Connect your Oura Ring to sync sleep, readiness, and activity data.")
+            Text("Connect your Oura Ring to sync sleep, readiness, and activity data. You'll need to create an OAuth application at cloud.ouraring.com")
         }
     }
     
@@ -72,14 +97,20 @@ struct SettingsView: View {
                 refreshData()
             } label: {
                 HStack {
-                    Text("Refresh Data")
+                    Text("Sync Data")
                     Spacer()
-                    if isRefreshing {
+                    if ouraManager.isSyncing {
                         ProgressView()
                     }
                 }
             }
-            .disabled(ouraTokens.isEmpty || isRefreshing)
+            .disabled(!ouraManager.isAuthenticated || ouraManager.isSyncing)
+            
+            if let syncError = ouraManager.syncError {
+                Text(syncError)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
             
             Button("Delete All Data", role: .destructive) {
                 showingDeleteConfirmation = true
@@ -138,19 +169,42 @@ struct SettingsView: View {
         }
     }
     
-    private func disconnectOura() {
-        for token in ouraTokens {
-            modelContext.delete(token)
+    private func startOAuthFlow() {
+        guard !clientId.isEmpty, !clientSecret.isEmpty else {
+            errorMessage = "Please enter both Client ID and Client Secret"
+            showingErrorAlert = true
+            return
         }
-        try? modelContext.save()
+        
+        ouraManager.configure(modelContext: modelContext, clientId: clientId, clientSecret: clientSecret)
+        
+        Task {
+            do {
+                try await ouraManager.authenticateWithWebSession()
+                try await ouraManager.syncData()
+            } catch {
+                errorMessage = error.localizedDescription
+                showingErrorAlert = true
+            }
+        }
+    }
+    
+    private func disconnectOura() {
+        do {
+            try ouraManager.disconnect()
+        } catch {
+            errorMessage = error.localizedDescription
+            showingErrorAlert = true
+        }
     }
     
     private func refreshData() {
-        isRefreshing = true
         Task {
-            try? await Task.sleep(for: .seconds(2))
-            await MainActor.run {
-                isRefreshing = false
+            do {
+                try await ouraManager.syncData()
+            } catch {
+                errorMessage = error.localizedDescription
+                showingErrorAlert = true
             }
         }
     }
@@ -239,5 +293,6 @@ struct PrivacyPoint: View {
 
 #Preview {
     SettingsView()
+        .environment(OuraManager())
         .modelContainer(for: [OuraToken.self, SleepSession.self, ReadinessScore.self, ActivityDay.self, HeartMetrics.self, LocationSample.self, WeatherSnapshot.self, DerivedInsight.self])
 }
