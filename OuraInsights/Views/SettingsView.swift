@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import OuraInsightsCore
 
 #if os(iOS)
 import UIKit
@@ -9,11 +10,16 @@ import AppKit
 
 struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var ouraTokens: [OuraToken]
     
-    @State private var showingOuraAuth = false
+    @StateObject private var importService = DataImportService()
+    
+    @State private var showingPATEntry = false
     @State private var showingDeleteConfirmation = false
-    @State private var isRefreshing = false
+    @State private var showingDisconnectConfirmation = false
+    @State private var patInput = ""
+    @State private var isValidating = false
+    @State private var validationError: String?
+    @State private var showingImportError = false
     
     var body: some View {
         NavigationStack {
@@ -27,26 +33,41 @@ struct SettingsView: View {
             #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
             #endif
+            .sheet(isPresented: $showingPATEntry) {
+                patEntrySheet
+            }
+            .alert("Import Error", isPresented: $showingImportError) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(importService.lastError?.localizedDescription ?? "Unknown error occurred")
+            }
         }
     }
     
     private var ouraConnectionSection: some View {
         Section {
-            if let token = ouraTokens.first {
+            if importService.hasToken {
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
                     Text("Connected to Oura")
                     Spacer()
-                    if let expiresAt = token.expiresAt {
-                        Text(expiresAt, style: .relative)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
                 }
                 
                 Button("Disconnect", role: .destructive) {
-                    disconnectOura()
+                    showingDisconnectConfirmation = true
+                }
+                .confirmationDialog(
+                    "Disconnect from Oura?",
+                    isPresented: $showingDisconnectConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button("Disconnect", role: .destructive) {
+                        disconnectOura()
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Your Personal Access Token will be removed. You can reconnect at any time.")
                 }
             } else {
                 HStack {
@@ -56,13 +77,15 @@ struct SettingsView: View {
                 }
                 
                 Button("Connect Oura Ring") {
-                    showingOuraAuth = true
+                    patInput = ""
+                    validationError = nil
+                    showingPATEntry = true
                 }
             }
         } header: {
             Text("Oura Connection")
         } footer: {
-            Text("Connect your Oura Ring to sync sleep, readiness, and activity data.")
+            Text("Connect your Oura Ring to sync sleep, readiness, and activity data. You'll need a Personal Access Token from cloud.ouraring.com")
         }
     }
     
@@ -74,12 +97,28 @@ struct SettingsView: View {
                 HStack {
                     Text("Refresh Data")
                     Spacer()
-                    if isRefreshing {
+                    if importService.isImporting {
                         ProgressView()
                     }
                 }
             }
-            .disabled(ouraTokens.isEmpty || isRefreshing)
+            .disabled(!importService.hasToken || importService.isImporting)
+            
+            if importService.isImporting {
+                Text(importService.importProgress)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            if let lastImport = importService.lastImportDate {
+                HStack {
+                    Text("Last Import")
+                    Spacer()
+                    Text(lastImport, style: .relative)
+                        .foregroundStyle(.secondary)
+                }
+                .font(.caption)
+            }
             
             Button("Delete All Data", role: .destructive) {
                 showingDeleteConfirmation = true
@@ -99,6 +138,67 @@ struct SettingsView: View {
         } header: {
             Text("Data Management")
         }
+    }
+    
+    private var patEntrySheet: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    SecureField("Personal Access Token", text: $patInput)
+                        .textContentType(.password)
+                        .autocorrectionDisabled()
+                        #if os(iOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
+                    
+                    if let error = validationError {
+                        Text(error)
+                            .foregroundStyle(.red)
+                            .font(.caption)
+                    }
+                } header: {
+                    Text("Enter Your Token")
+                } footer: {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("To get your Personal Access Token:")
+                        Text("1. Go to cloud.ouraring.com")
+                        Text("2. Sign in to your Oura account")
+                        Text("3. Navigate to Personal Access Tokens")
+                        Text("4. Create a new token and copy it here")
+                    }
+                    .font(.caption)
+                }
+                
+                Section {
+                    Button {
+                        validateAndSaveToken()
+                    } label: {
+                        HStack {
+                            Text("Connect")
+                            Spacer()
+                            if isValidating {
+                                ProgressView()
+                            }
+                        }
+                    }
+                    .disabled(patInput.isEmpty || isValidating)
+                }
+            }
+            .navigationTitle("Connect Oura")
+            #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        showingPATEntry = false
+                    }
+                }
+            }
+        }
+        #if os(macOS)
+        .frame(minWidth: 400, minHeight: 350)
+        #endif
     }
     
     private var privacySection: some View {
@@ -139,18 +239,41 @@ struct SettingsView: View {
     }
     
     private func disconnectOura() {
-        for token in ouraTokens {
-            modelContext.delete(token)
+        try? importService.deleteToken()
+    }
+    
+    private func validateAndSaveToken() {
+        isValidating = true
+        validationError = nil
+        
+        Task {
+            do {
+                try importService.saveToken(patInput)
+                let isValid = try await importService.validateToken()
+                
+                await MainActor.run {
+                    isValidating = false
+                    if isValid {
+                        showingPATEntry = false
+                        refreshData()
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    isValidating = false
+                    validationError = error.localizedDescription
+                    try? importService.deleteToken()
+                }
+            }
         }
-        try? modelContext.save()
     }
     
     private func refreshData() {
-        isRefreshing = true
         Task {
-            try? await Task.sleep(for: .seconds(2))
-            await MainActor.run {
-                isRefreshing = false
+            do {
+                try await importService.importRecentData(days: 30, modelContext: modelContext)
+            } catch {
+                showingImportError = true
             }
         }
     }
@@ -239,5 +362,5 @@ struct PrivacyPoint: View {
 
 #Preview {
     SettingsView()
-        .modelContainer(for: [OuraToken.self, SleepSession.self, ReadinessScore.self, ActivityDay.self, HeartMetrics.self, LocationSample.self, WeatherSnapshot.self, DerivedInsight.self])
+        .modelContainer(for: [SleepSession.self, ReadinessScore.self, ActivityDay.self, HeartMetrics.self, LocationSample.self, WeatherSnapshot.self, DerivedInsight.self])
 }

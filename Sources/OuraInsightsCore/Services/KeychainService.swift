@@ -142,3 +142,28 @@ public final class KeychainService: KeychainServiceProtocol {
         return query
     }
 }
+
+// MARK: - PAT-Specific Helpers
+public extension KeychainService {
+    private static let ouraPatKey = "oura_personal_access_token"
+    
+    /// Save Oura Personal Access Token
+    func saveOuraPAT(_ token: String) throws {
+        try save(token, forKey: Self.ouraPatKey)
+    }
+    
+    /// Load Oura Personal Access Token
+    func loadOuraPAT() throws -> String {
+        return try load(forKey: Self.ouraPatKey)
+    }
+    
+    /// Delete Oura Personal Access Token
+    func deleteOuraPAT() throws {
+        try delete(forKey: Self.ouraPatKey)
+    }
+    
+    /// Check if Oura PAT exists
+    func hasOuraPAT() -> Bool {
+        return exists(forKey: Self.ouraPatKey)
+    }
+}

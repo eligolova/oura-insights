@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ACORE000000000000000001 /* OuraInsightsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0ACORE000000000000000002 /* OuraInsightsCore */; };
+		0ACORE000000000000000003 /* DataImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACORE000000000000000004 /* DataImportService.swift */; };
 		0A1111111111111111111111 /* OuraInsightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222222 /* OuraInsightsApp.swift */; };
 		0A1111111111111111111112 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222223 /* ContentView.swift */; };
 		0A1111111111111111111113 /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2222222222222222222224 /* SleepSession.swift */; };
@@ -54,6 +56,7 @@
 		0A2222222222222222222232 /* OuraInsightsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OuraInsightsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2222222222222222222233 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A2222222222222222222234 /* OuraInsights.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OuraInsights.entitlements; sourceTree = "<group>"; };
+		0ACORE000000000000000004 /* DataImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataImportService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ACORE000000000000000001 /* OuraInsightsCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +103,7 @@
 				0A2222222222222222222223 /* ContentView.swift */,
 				0A777777777777777777777B /* Data */,
 				0A777777777777777777777C /* Views */,
+				0ACORE000000000000000005 /* Services */,
 				0A2222222222222222222233 /* Info.plist */,
 				0A2222222222222222222234 /* OuraInsights.entitlements */,
 			);
@@ -147,6 +152,14 @@
 			path = OuraInsightsTests;
 			sourceTree = "<group>";
 		};
+		0ACORE000000000000000005 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0ACORE000000000000000004 /* DataImportService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -162,6 +175,9 @@
 			dependencies = (
 			);
 			name = OuraInsights;
+			packageProductDependencies = (
+				0ACORE000000000000000002 /* OuraInsightsCore */,
+			);
 			productName = OuraInsights;
 			productReference = 0A2222222222222222222231 /* OuraInsights.app */;
 			productType = "com.apple.product-type.application";
@@ -211,6 +227,9 @@
 				Base,
 			);
 			mainGroup = 0A7777777777777777777777;
+			packageReferences = (
+				0ACORE000000000000000006 /* XCLocalSwiftPackageReference ".." */,
+			);
 			productRefGroup = 0A777777777777777777777A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -220,6 +239,21 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0ACORE000000000000000006 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0ACORE000000000000000002 /* OuraInsightsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0ACORE000000000000000006 /* XCLocalSwiftPackageReference ".." */;
+			productName = OuraInsightsCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0A9999999999999999999999 /* Sources */ = {
@@ -240,6 +274,7 @@
 				0A111111111111111111111C /* TrendsView.swift in Sources */,
 				0A111111111111111111111D /* ExploreView.swift in Sources */,
 				0A111111111111111111111E /* SettingsView.swift in Sources */,
+				0ACORE000000000000000003 /* DataImportService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,8 @@ final class ActivityDayTests: XCTestCase {
             id: "test-activity-1",
             date: Date(),
             score: 85,
-            steps: 10000,
-            activeCalories: 500
+            activeCalories: 500,
+            steps: 10000
         )
         
         XCTAssertEqual(activity.id, "test-activity-1")
@@ -49,8 +49,8 @@ final class ActivityDayTests: XCTestCase {
         let activity = ActivityDay(
             id: "test-encode",
             date: Date(),
-            steps: 10000,
-            activeCalories: 500
+            activeCalories: 500,
+            steps: 10000
         )
         
         let encoder = JSONEncoder()
