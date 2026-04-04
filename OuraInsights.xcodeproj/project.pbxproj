@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FEEAFBEC0000000000000032 /* OuraInsightsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000022 /* OuraInsightsApp.swift */; };
+		FEEAFBEC0000000000000033 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000023 /* ContentView.swift */; };
+		FEEAFBEC0000000000000034 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000024 /* DashboardView.swift */; };
+		FEEAFBEC0000000000000035 /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000025 /* TrendsView.swift */; };
+		FEEAFBEC0000000000000036 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000026 /* ExploreView.swift */; };
+		FEEAFBEC0000000000000037 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000027 /* SettingsView.swift */; };
+		FEEAFBEC0000000000000038 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000028 /* OnboardingView.swift */; };
+		FEEAFBEC0000000000000039 /* SleepSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000029 /* SleepSession.swift */; };
+		FEEAFBEC000000000000003A /* ReadinessScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002A /* ReadinessScore.swift */; };
+		FEEAFBEC000000000000003B /* ActivityDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002B /* ActivityDay.swift */; };
+		FEEAFBEC000000000000003C /* HeartMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002C /* HeartMetrics.swift */; };
+		FEEAFBEC000000000000003D /* LocationSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002D /* LocationSample.swift */; };
+		FEEAFBEC000000000000003E /* WeatherSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002E /* WeatherSnapshot.swift */; };
+		FEEAFBEC000000000000003F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC000000000000002F /* PersistenceController.swift */; };
+		FEEAFBEC0000000000000040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000030 /* Assets.xcassets */; };
+		FEEAFBEC0000000000000041 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEEAFBEC0000000000000031 /* Preview Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FEEAFBEC000000000000000D /* OuraInsights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OuraInsights.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEEAFBEC0000000000000022 /* OuraInsightsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuraInsightsApp.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000023 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000024 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000025 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000026 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000027 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000028 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000029 /* SleepSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSession.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002A /* ReadinessScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessScore.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002B /* ActivityDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDay.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002C /* HeartMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartMetrics.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002D /* LocationSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSample.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002E /* WeatherSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherSnapshot.swift; sourceTree = "<group>"; };
+		FEEAFBEC000000000000002F /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FEEAFBEC0000000000000031 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FEEAFBEC000000000000000B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FEEAFBEC000000000000000C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC000000000000000D /* OuraInsights.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000000E = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC000000000000000F /* OuraInsights */,
+				FEEAFBEC000000000000000C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000000F /* OuraInsights */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000010 /* App */,
+				FEEAFBEC0000000000000015 /* Data */,
+				FEEAFBEC000000000000001A /* Services */,
+				FEEAFBEC000000000000001E /* Analysis */,
+				FEEAFBEC0000000000000030 /* Assets.xcassets */,
+				FEEAFBEC0000000000000021 /* Preview Content */,
+			);
+			path = OuraInsights;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000010 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000011 /* AppEntry */,
+				FEEAFBEC0000000000000012 /* Views */,
+				FEEAFBEC0000000000000013 /* ViewModels */,
+				FEEAFBEC0000000000000014 /* Charts */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000011 /* AppEntry */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000022 /* OuraInsightsApp.swift */,
+			);
+			path = AppEntry;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000012 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000023 /* ContentView.swift */,
+				FEEAFBEC0000000000000024 /* DashboardView.swift */,
+				FEEAFBEC0000000000000025 /* TrendsView.swift */,
+				FEEAFBEC0000000000000026 /* ExploreView.swift */,
+				FEEAFBEC0000000000000027 /* SettingsView.swift */,
+				FEEAFBEC0000000000000028 /* OnboardingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000013 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000014 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000015 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000016 /* Models */,
+				FEEAFBEC0000000000000017 /* Persistence */,
+				FEEAFBEC0000000000000018 /* Importers */,
+				FEEAFBEC0000000000000019 /* Normalisation */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000016 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000029 /* SleepSession.swift */,
+				FEEAFBEC000000000000002A /* ReadinessScore.swift */,
+				FEEAFBEC000000000000002B /* ActivityDay.swift */,
+				FEEAFBEC000000000000002C /* HeartMetrics.swift */,
+				FEEAFBEC000000000000002D /* LocationSample.swift */,
+				FEEAFBEC000000000000002E /* WeatherSnapshot.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000017 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC000000000000002F /* PersistenceController.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000018 /* Importers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Importers;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000019 /* Normalisation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Normalisation;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC000000000000001B /* OuraClient */,
+				FEEAFBEC000000000000001C /* WeatherClient */,
+				FEEAFBEC000000000000001D /* LocationService */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001B /* OuraClient */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OuraClient;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001C /* WeatherClient */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WeatherClient;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001D /* LocationService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LocationService;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001E /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC000000000000001F /* Metrics */,
+				FEEAFBEC0000000000000020 /* Correlations */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC000000000000001F /* Metrics */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Metrics;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000020 /* Correlations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Correlations;
+			sourceTree = "<group>";
+		};
+		FEEAFBEC0000000000000021 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				FEEAFBEC0000000000000031 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FEEAFBEC0000000000000005 /* OuraInsights */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEEAFBEC0000000000000006 /* Build configuration list for PBXNativeTarget "OuraInsights" */;
+			buildPhases = (
+				FEEAFBEC0000000000000009 /* Sources */,
+				FEEAFBEC000000000000000B /* Frameworks */,
+				FEEAFBEC000000000000000A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OuraInsights;
+			productName = OuraInsights;
+			productReference = FEEAFBEC000000000000000D /* OuraInsights.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FEEAFBEC0000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					FEEAFBEC0000000000000005 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = FEEAFBEC0000000000000002 /* Build configuration list for PBXProject "OuraInsights" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FEEAFBEC000000000000000E;
+			productRefGroup = FEEAFBEC000000000000000C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FEEAFBEC0000000000000005 /* OuraInsights */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FEEAFBEC000000000000000A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEEAFBEC0000000000000041 /* Preview Assets.xcassets in Resources */,
+				FEEAFBEC0000000000000040 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEEAFBEC0000000000000009 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEEAFBEC0000000000000032 /* OuraInsightsApp.swift in Sources */,
+				FEEAFBEC0000000000000033 /* ContentView.swift in Sources */,
+				FEEAFBEC0000000000000034 /* DashboardView.swift in Sources */,
+				FEEAFBEC0000000000000035 /* TrendsView.swift in Sources */,
+				FEEAFBEC0000000000000036 /* ExploreView.swift in Sources */,
+				FEEAFBEC0000000000000037 /* SettingsView.swift in Sources */,
+				FEEAFBEC0000000000000038 /* OnboardingView.swift in Sources */,
+				FEEAFBEC0000000000000039 /* SleepSession.swift in Sources */,
+				FEEAFBEC000000000000003A /* ReadinessScore.swift in Sources */,
+				FEEAFBEC000000000000003B /* ActivityDay.swift in Sources */,
+				FEEAFBEC000000000000003C /* HeartMetrics.swift in Sources */,
+				FEEAFBEC000000000000003D /* LocationSample.swift in Sources */,
+				FEEAFBEC000000000000003E /* WeatherSnapshot.swift in Sources */,
+				FEEAFBEC000000000000003F /* PersistenceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FEEAFBEC0000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FEEAFBEC0000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		FEEAFBEC0000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OuraInsights/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Oura Insights";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ourainsights.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FEEAFBEC0000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OuraInsights/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Oura Insights";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ourainsights.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FEEAFBEC0000000000000002 /* Build configuration list for PBXProject "OuraInsights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEEAFBEC0000000000000003 /* Debug */,
+				FEEAFBEC0000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEEAFBEC0000000000000006 /* Build configuration list for PBXNativeTarget "OuraInsights" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEEAFBEC0000000000000007 /* Debug */,
+				FEEAFBEC0000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = FEEAFBEC0000000000000001 /* Project object */;
+}
