@@ -1,0 +1,76 @@
+name: OuraInsights
+options:
+  minimumXcodeGenVersion: 2.44.0
+  xcodeVersion: "15.4"
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+settings:
+  base:
+    PRODUCT_BUNDLE_IDENTIFIER: dev.codex.oura-insights
+    SWIFT_VERSION: 5.10
+    GENERATE_INFOPLIST_FILE: YES
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 0.1.0
+targets:
+  OuraInsights:
+    type: application
+    platform: macOS
+    sources:
+      - path: App/AppEntry/macOS
+      - path: App/Views
+      - path: App/ViewModels
+      - path: App/Charts
+      - path: Data/Models
+      - path: Data/Persistence
+      - path: Data/Importers
+      - path: Data/Normalisation
+      - path: Services/OuraClient
+      - path: Services/WeatherClient
+      - path: Services/LocationService
+      - path: Analysis/Metrics
+      - path: Analysis/Correlations
+    settings:
+      base:
+        PRODUCT_NAME: OuraInsights
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Oura Insights uses your location while the app is open to match wellness data with local weather context.
+  OuraInsightsiOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: App/AppEntry/iOS
+      - path: App/Views
+      - path: App/ViewModels
+      - path: App/Charts
+      - path: Data/Models
+      - path: Data/Persistence
+      - path: Data/Importers
+      - path: Data/Normalisation
+      - path: Services/OuraClient
+      - path: Services/WeatherClient
+      - path: Services/LocationService
+      - path: Analysis/Metrics
+      - path: Analysis/Correlations
+    settings:
+      base:
+        PRODUCT_NAME: OuraInsights
+        SUPPORTS_MACCATALYST: NO
+        TARGETED_DEVICE_FAMILY: 1
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Oura Insights uses your location while the app is open to match wellness data with local weather context.
+schemes:
+  OuraInsights:
+    build:
+      targets:
+        OuraInsights: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+  OuraInsightsiOS:
+    build:
+      targets:
+        OuraInsightsiOS: all
+    run:
+      config: Debug
+    test:
+      config: Debug
