@@ -13,7 +13,7 @@ This repo is a benchmark: the same `spec.md` is given to multiple AI tools indep
 | `main` | — | Spec only (this branch, locked) |
 | `windsurf` | Windsurf | Phase 0 complete |
 | `claude` | Claude Code | Phase 0 + test fixes |
-| `codex` | Codex | Not started |
+| `codex` | Codex | Phase 0 complete |
 
 ## How to compare
 
@@ -39,10 +39,12 @@ See [`spec.md`](./spec.md) — this is the single source of truth given to each 
 ## Running an implementation
 
 ```bash
-git checkout claude   # or windsurf, codex
-xcodegen generate
+git checkout codex
+./Scripts/generate_xcodeproj.sh
 open OuraInsights.xcodeproj
 ```
+
+The helper script runs `xcodegen generate` and then normalizes the generated project format so it opens cleanly in the repo's current Xcode environment.
 
 ## Running tests (Swift package)
 
