@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Xcode build products
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+build/
+DerivedData/
+
+# SPM
+.build/
+.swiftpm/
+
+# Xcode auto-generated
+*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
