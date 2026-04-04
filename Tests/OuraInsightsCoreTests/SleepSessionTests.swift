@@ -18,14 +18,15 @@ final class SleepSessionTests: XCTestCase {
         XCTAssertEqual(session.totalSleepDuration, 25200)
     }
     
-    func testSleepDurationHours() {
+    func testSleepDurationHours() throws {
         let session = SleepSession(
             id: "test-1",
             date: Date(),
             totalSleepDuration: 25200 // 7 hours
         )
         
-        XCTAssertEqual(session.sleepDurationHours, 7.0, accuracy: 0.01)
+        let hours = try XCTUnwrap(session.sleepDurationHours)
+        XCTAssertEqual(hours, 7.0, accuracy: 0.01)
     }
     
     func testSleepDurationHoursNil() {

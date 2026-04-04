@@ -27,7 +27,7 @@ brew install xcodegen
 ### 2. Generate the Xcode project
 
 ```bash
-cd /path/to/oura-insights
+cd oura-insights
 xcodegen generate
 ```
 
