@@ -10,7 +10,7 @@ Primary intent:
 * Privacy-first
 * Architected cleanly so future data sources (e.g. calendar, workouts, travel) can be added
 
-This document is written to be used directly as an **AI coding tool specification**.
+This document is written to be used directly as an **AI coding tool specification** — a shared baseline for parallel implementations across different AI tools (see branches).
 
 ---
 
@@ -221,7 +221,7 @@ No ML in v1 — pure statistical summaries.
 
 * GitHub repo
 * Swift Package Manager only
-* Target AI coding tool: **Cursor / Windsurf–style agent**
+* Target AI coding tool: see branch (each branch is a separate AI implementation)
 * Use a TDD approach to build the app.
 
 Directory structure:
