@@ -44,7 +44,7 @@ git checkout codex
 open OuraInsights.xcodeproj
 ```
 
-The helper script runs `xcodegen generate` and then normalizes the generated project format so it opens cleanly in the repo's current Xcode environment.
+The helper script runs `xcodegen generate` and then normalises the generated project format so it opens cleanly in the repo's current Xcode environment.
 
 ## Running tests (Swift package)
 

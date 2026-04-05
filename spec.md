@@ -4,6 +4,8 @@
 
 This project is a **personal-first health analytics application** that ingests data from the **Oura Ring**, enriches it with **weather** and **location context**, performs **on-device analysis**, and presents insights via a **native SwiftUI app** running on **iPhone and macOS (shared codebase)**.
 
+Use **UK English** consistently across documentation, code comments, and user-facing copy.
+
 Primary intent:
 
 * Deep personal insight (sleep, readiness, HRV) rather than social or gamified use
