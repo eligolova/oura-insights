@@ -6,7 +6,14 @@ final class AppContainerTests: XCTestCase {
     func testCreatesInMemorySwiftDataContainerWithExpectedSchema() throws {
         let container = AppContainer.makeModelContainer(isStoredInMemoryOnly: true)
         let context = ModelContext(container)
-        let session = SleepSession(startDate: .now.addingTimeInterval(-28_800), endDate: .now, score: 85)
+        let session = SleepSession(
+            sourceRecordID: "sleep_1",
+            day: .now,
+            startDate: .now.addingTimeInterval(-28_800),
+            endDate: .now,
+            totalSleepSeconds: 28_800,
+            score: 85
+        )
 
         context.insert(session)
         try context.save()

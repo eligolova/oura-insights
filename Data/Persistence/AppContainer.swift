@@ -1,27 +1,34 @@
 import Foundation
+import Observation
 import SwiftData
 
+@MainActor
 @Observable
 final class AppContainer {
     static let shared = AppContainer()
 
     let modelContainer: ModelContainer
     let appShellViewModel: AppShellViewModel
+    let ouraSessionViewModel: OuraSessionViewModel
 
     init(
         modelContainer: ModelContainer = AppContainer.makeModelContainer(),
-        appShellViewModel: AppShellViewModel = AppShellViewModel()
+        appShellViewModel: AppShellViewModel = AppShellViewModel(),
+        ouraSessionViewModel: OuraSessionViewModel? = nil
     ) {
         self.modelContainer = modelContainer
         self.appShellViewModel = appShellViewModel
+        self.ouraSessionViewModel = ouraSessionViewModel ?? OuraSessionViewModel(modelContainer: modelContainer)
     }
 
-    static var schema: Schema {
+    nonisolated static var schema: Schema {
         Schema([
             User.self,
             OuraToken.self,
             SleepSession.self,
             ReadinessScore.self,
+            RawOuraSleepRecord.self,
+            RawOuraReadinessRecord.self,
             ActivityDay.self,
             HeartMetrics.self,
             LocationSample.self,
@@ -30,7 +37,7 @@ final class AppContainer {
         ])
     }
 
-    static func makeModelContainer(isStoredInMemoryOnly: Bool = false) -> ModelContainer {
+    nonisolated static func makeModelContainer(isStoredInMemoryOnly: Bool = false) -> ModelContainer {
         let configuration = ModelConfiguration(
             "OuraInsights",
             schema: schema,
