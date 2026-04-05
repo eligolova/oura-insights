@@ -44,7 +44,7 @@ struct TrendsView: View {
     var body: some View {
         AppScreen(
             title: "Trends",
-            subtitle: "Trend charts will visualize long-term changes across sleep, HRV, readiness, and other imported signals.",
+            subtitle: "Trend charts will visualise long-term changes across sleep, HRV, readiness, and other imported signals.",
             sections: [
                 AppScreenSection(
                     title: "Planned charts",
