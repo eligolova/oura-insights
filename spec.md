@@ -223,6 +223,7 @@ No ML in v1 — pure statistical summaries.
 * Swift Package Manager only
 * Target AI coding tool: see branch (each branch is a separate AI implementation)
 * Use a TDD approach to build the app.
+* **Language: UK English throughout** — use British spellings in all code comments, user-facing strings, and documentation (e.g. *colour* not *color*, *organise* not *organize*, *authorisation* not *authorization*, *initialise* not *initialize*).
 
 Directory structure:
 

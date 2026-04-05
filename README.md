@@ -29,6 +29,10 @@ git diff main..claude --stat
 
 See [`spec.md`](./spec.md) — this is the single source of truth given to each AI tool. It is not modified per-branch; only this `main` branch holds the canonical version.
 
+## Style
+
+All code comments, user-facing strings, and documentation use **UK English** (e.g. *colour*, *organise*, *authorisation*). See `spec.md` §8 for details.
+
 ## Requirements
 
 - macOS 14.0+ / iOS 17.0+
