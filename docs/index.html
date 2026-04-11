@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OuraInsights</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5efe6;
+      --panel: #fffaf4;
+      --text: #1f1a17;
+      --muted: #665c55;
+      --line: #d8cbc0;
+      --accent: #6a4f3b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      background: linear-gradient(180deg, #efe5d7 0%, var(--bg) 55%, #f8f3ec 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .panel {
+      background: rgba(255, 250, 244, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(63, 46, 33, 0.08);
+    }
+
+    h1, h2 {
+      margin: 0 0 12px;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.3rem);
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin-top: 28px;
+    }
+
+    p, li {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .button {
+      text-decoration: none;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .meta {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="panel">
+      <h1>OuraInsights</h1>
+      <p>
+        OuraInsights is a personal health analytics project that helps its owner review Oura data,
+        and later related context such as weather and location, in a private on-device app.
+      </p>
+      <p>
+        This site exists to provide the public legal pages required for Oura application registration.
+      </p>
+
+      <h2>Legal pages</h2>
+      <nav aria-label="Legal pages">
+        <a class="button" href="./privacy/">Privacy Policy</a>
+        <a class="button" href="./terms/">Terms of Service</a>
+      </nav>
+
+      <div class="meta">
+        Contact: <a href="mailto:lisa.golova@gmail.com">lisa.golova@gmail.com</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
