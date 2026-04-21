@@ -141,12 +141,14 @@ struct OuraAuthClient {
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.setValue(Self.basicAuthorisationHeader(
+            clientID: request.clientID,
+            clientSecret: request.clientSecret
+        ), forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = Self.formEncodedBody([
             URLQueryItem(name: "grant_type", value: "authorization_code"),
             URLQueryItem(name: "code", value: request.code),
-            URLQueryItem(name: "redirect_uri", value: request.redirectURI.absoluteString),
-            URLQueryItem(name: "client_id", value: request.clientID),
-            URLQueryItem(name: "client_secret", value: request.clientSecret)
+            URLQueryItem(name: "redirect_uri", value: request.redirectURI.absoluteString)
         ])
 
         let (data, response) = try await session.data(for: urlRequest)
@@ -155,7 +157,7 @@ struct OuraAuthClient {
         }
 
         guard (200 ..< 300).contains(httpResponse.statusCode) else {
-            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            let message = Self.errorMessage(from: data)
             throw OuraAuthError.tokenExchangeFailed(statusCode: httpResponse.statusCode, message: message)
         }
 
@@ -176,6 +178,24 @@ struct OuraAuthClient {
 
     private static func formEncodedBody(_ items: [URLQueryItem]) -> Data? {
         percentEncodedQuery(items).data(using: .utf8)
+    }
+
+    private static func errorMessage(from data: Data) -> String {
+        guard
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else {
+            return String(data: data, encoding: .utf8) ?? "Unknown error"
+        }
+
+        let fields = ["error", "error_description", "detail", "title"]
+        let parts = fields.compactMap { json[$0] as? String }.filter { $0.isEmpty == false }
+        return parts.isEmpty ? "Unknown error" : parts.joined(separator: ": ")
+    }
+
+    private static func basicAuthorisationHeader(clientID: String, clientSecret: String) -> String {
+        let credentials = "\(clientID):\(clientSecret)"
+        let encodedCredentials = Data(credentials.utf8).base64EncodedString()
+        return "Basic \(encodedCredentials)"
     }
 
     private static func percentEncodedQuery(_ items: [URLQueryItem]) -> String {
