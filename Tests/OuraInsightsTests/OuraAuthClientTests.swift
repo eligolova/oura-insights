@@ -19,10 +19,10 @@ final class OuraAuthClientTests: XCTestCase {
         XCTAssertEqual(components.host, "cloud.ouraring.com")
         XCTAssertEqual(queryItems["response_type"], "code")
         XCTAssertEqual(queryItems["client_id"], "client123")
-        XCTAssertEqual(queryItems["redirect_uri"], "oura-insights://oauth/callback")
+        XCTAssertEqual(queryItems["redirect_uri"], "https://eligolova.github.io/oura-insights/oauth/callback/")
         XCTAssertEqual(queryItems["scope"], "daily")
         XCTAssertEqual(queryItems["state"], "state-1")
-        XCTAssertTrue(url.absoluteString.contains("redirect_uri=oura-insights%3A%2F%2Foauth%2Fcallback"))
+        XCTAssertTrue(url.absoluteString.contains("redirect_uri=https%3A%2F%2Feligolova.github.io%2Foura-insights%2Foauth%2Fcallback%2F"))
     }
 
     func testParsesCallbackQueryIntoAuthorisationCode() throws {

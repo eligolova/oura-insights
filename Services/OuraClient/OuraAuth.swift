@@ -70,7 +70,7 @@ struct OuraTokenExchangeRequest: Equatable, Sendable {
 }
 
 struct OuraAuthClient {
-    static let defaultRedirectURI = URL(string: "oura-insights://oauth/callback")!
+    static let defaultRedirectURI = URL(string: "https://eligolova.github.io/oura-insights/oauth/callback/")!
     static let defaultScopes = ["daily"]
 
     private let authoriseURL = URL(string: "https://cloud.ouraring.com/oauth/authorize")!
