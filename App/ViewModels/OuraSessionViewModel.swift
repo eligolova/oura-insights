@@ -10,6 +10,7 @@ final class OuraSessionViewModel {
             userDefaults.set(clientID, forKey: Self.clientIDKey)
         }
     }
+    var clientSecret = ""
     var isAuthorising = false
     var isSyncing = false
     var lastErrorMessage: String?
@@ -68,6 +69,10 @@ final class OuraSessionViewModel {
     }
 
     func makeAuthorisationURL() throws -> URL {
+        guard clientSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
+            throw OuraAuthError.missingClientSecret
+        }
+
         let state = UUID().uuidString
         pendingState = state
         isAuthorising = true
@@ -86,8 +91,16 @@ final class OuraSessionViewModel {
     func handleIncomingURL(_ url: URL) async {
         do {
             let result = try authClient.parseAuthorisationCallback(url: url, expectedState: pendingState)
-            try tokenStore.save(result.token)
-            try persistTokenMetadata(result.token)
+            let token = try await authClient.exchangeCodeForToken(
+                request: OuraTokenExchangeRequest(
+                    code: result.code,
+                    clientID: clientID.trimmingCharacters(in: .whitespacesAndNewlines),
+                    clientSecret: clientSecret.trimmingCharacters(in: .whitespacesAndNewlines),
+                    redirectURI: redirectURI
+                )
+            )
+            try tokenStore.save(token)
+            try persistTokenMetadata(token)
             pendingState = nil
             isAuthorising = false
             refreshLocalState()

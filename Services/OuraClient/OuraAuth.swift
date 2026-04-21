@@ -2,23 +2,32 @@ import Foundation
 
 enum OuraAuthError: LocalizedError, Equatable {
     case missingClientID
+    case missingClientSecret
     case invalidRedirect
     case accessDenied
     case invalidState
-    case missingAccessToken
+    case missingAuthorisationCode
+    case invalidTokenResponse
+    case tokenExchangeFailed(statusCode: Int, message: String)
 
     var errorDescription: String? {
         switch self {
         case .missingClientID:
             "Add your Oura client ID before starting sign-in."
+        case .missingClientSecret:
+            "Add your Oura client secret before starting sign-in."
         case .invalidRedirect:
             "The Oura callback could not be understood."
         case .accessDenied:
             "Oura sign-in was cancelled."
         case .invalidState:
             "The Oura callback state did not match the pending sign-in request."
-        case .missingAccessToken:
-            "Oura did not return an access token."
+        case .missingAuthorisationCode:
+            "Oura did not return an authorisation code."
+        case .invalidTokenResponse:
+            "Oura returned an invalid token response."
+        case let .tokenExchangeFailed(statusCode, message):
+            "Oura token exchange failed with status \(statusCode): \(message)"
         }
     }
 }
@@ -47,10 +56,32 @@ struct OuraAuthorisationResult: Equatable, Sendable {
     let state: String?
 }
 
+struct OuraAuthorisationCode: Equatable, Sendable {
+    let code: String
+    let scopes: [String]
+    let state: String?
+}
+
+struct OuraTokenExchangeRequest: Equatable, Sendable {
+    let code: String
+    let clientID: String
+    let clientSecret: String
+    let redirectURI: URL
+}
+
 struct OuraAuthClient {
     static let defaultRedirectURI = URL(string: "oura-insights://oauth/callback")!
     static let defaultScopes = ["daily"]
+
     private let authoriseURL = URL(string: "https://cloud.ouraring.com/oauth/authorize")!
+    private let tokenURL = URL(string: "https://api.ouraring.com/oauth/token")!
+    private let session: URLSession
+    private let decoder: JSONDecoder
+
+    init(session: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
+        self.session = session
+        self.decoder = decoder
+    }
 
     func makeAuthorisationURL(request: OuraAuthorisationRequest) throws -> URL {
         guard request.clientID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
@@ -59,7 +90,7 @@ struct OuraAuthClient {
 
         var components = URLComponents(url: authoriseURL, resolvingAgainstBaseURL: false)
         components?.queryItems = [
-            URLQueryItem(name: "response_type", value: "token"),
+            URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "client_id", value: request.clientID),
             URLQueryItem(name: "redirect_uri", value: request.redirectURI.absoluteString),
             URLQueryItem(name: "scope", value: request.scopes.joined(separator: " ")),
@@ -73,54 +104,95 @@ struct OuraAuthClient {
         return url
     }
 
-    func parseAuthorisationCallback(url: URL, expectedState: String?) throws -> OuraAuthorisationResult {
+    func parseAuthorisationCallback(url: URL, expectedState: String?) throws -> OuraAuthorisationCode {
         if let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
            queryItems.contains(where: { $0.name == "error" && $0.value == "access_denied" }) {
             throw OuraAuthError.accessDenied
         }
 
-        let fragmentItems = Self.parseURLEncodedFragment(url.fragment)
-        guard let accessToken = fragmentItems["access_token"], accessToken.isEmpty == false else {
-            throw OuraAuthError.missingAccessToken
+        let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? []
+        let values = Dictionary(uniqueKeysWithValues: queryItems.map { ($0.name, $0.value ?? "") })
+        guard let code = values["code"], code.isEmpty == false else {
+            throw OuraAuthError.missingAuthorisationCode
         }
 
-        let state = fragmentItems["state"]
+        let state = values["state"]
         if let expectedState, state != expectedState {
             throw OuraAuthError.invalidState
         }
 
-        let expiresIn = Double(fragmentItems["expires_in"] ?? "") ?? 0
-        let scopes = (fragmentItems["scope"] ?? "")
+        let scopes = (values["scope"] ?? "")
             .split(separator: " ")
             .map(String.init)
             .filter { $0.isEmpty == false }
 
-        let token = OuraSessionToken(
-            accessToken: accessToken,
-            refreshToken: fragmentItems["refresh_token"],
-            tokenType: fragmentItems["token_type"] ?? "bearer",
-            scopes: scopes,
-            expiresAt: .now.addingTimeInterval(expiresIn)
-        )
-
-        return OuraAuthorisationResult(token: token, state: state)
+        return OuraAuthorisationCode(code: code, scopes: scopes, state: state)
     }
 
-    private static func parseURLEncodedFragment(_ fragment: String?) -> [String: String] {
-        guard let fragment else {
-            return [:]
+    func exchangeCodeForToken(request: OuraTokenExchangeRequest) async throws -> OuraSessionToken {
+        guard request.clientID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
+            throw OuraAuthError.missingClientID
+        }
+        guard request.clientSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
+            throw OuraAuthError.missingClientSecret
         }
 
-        return fragment
-            .split(separator: "&")
-            .reduce(into: [String: String]()) { partialResult, pair in
-                let components = pair.split(separator: "=", maxSplits: 1).map(String.init)
-                guard let name = components.first?.removingPercentEncoding else {
-                    return
-                }
+        var urlRequest = URLRequest(url: tokenURL)
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.httpBody = Self.formEncodedBody([
+            URLQueryItem(name: "grant_type", value: "authorization_code"),
+            URLQueryItem(name: "code", value: request.code),
+            URLQueryItem(name: "redirect_uri", value: request.redirectURI.absoluteString),
+            URLQueryItem(name: "client_id", value: request.clientID),
+            URLQueryItem(name: "client_secret", value: request.clientSecret)
+        ])
 
-                let value = components.count > 1 ? components[1].removingPercentEncoding ?? components[1] : ""
-                partialResult[name] = value.replacingOccurrences(of: "+", with: " ")
-            }
+        let (data, response) = try await session.data(for: urlRequest)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw OuraAuthError.invalidTokenResponse
+        }
+
+        guard (200 ..< 300).contains(httpResponse.statusCode) else {
+            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw OuraAuthError.tokenExchangeFailed(statusCode: httpResponse.statusCode, message: message)
+        }
+
+        let tokenResponse = try decoder.decode(OuraTokenResponse.self, from: data)
+        let scopes = tokenResponse.scope?
+            .split(separator: " ")
+            .map(String.init)
+            .filter { $0.isEmpty == false } ?? []
+
+        return OuraSessionToken(
+            accessToken: tokenResponse.accessToken,
+            refreshToken: tokenResponse.refreshToken,
+            tokenType: tokenResponse.tokenType,
+            scopes: scopes,
+            expiresAt: .now.addingTimeInterval(TimeInterval(tokenResponse.expiresIn))
+        )
+    }
+
+    private static func formEncodedBody(_ items: [URLQueryItem]) -> Data? {
+        var components = URLComponents()
+        components.queryItems = items
+        return components.percentEncodedQuery?.data(using: .utf8)
+    }
+}
+
+private struct OuraTokenResponse: Decodable {
+    let accessToken: String
+    let refreshToken: String?
+    let tokenType: String
+    let expiresIn: Int
+    let scope: String?
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case refreshToken = "refresh_token"
+        case tokenType = "token_type"
+        case expiresIn = "expires_in"
+        case scope
     }
 }

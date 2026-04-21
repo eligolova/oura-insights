@@ -118,6 +118,8 @@ struct OuraSettingsView: View {
                         .font(.headline)
                     TextField("Enter your Oura developer client ID", text: $viewModel.clientID)
                         .textFieldStyle(.roundedBorder)
+                    SecureField("Enter your Oura developer client secret", text: $viewModel.clientSecret)
+                        .textFieldStyle(.roundedBorder)
                     Text("Redirect URI: \(viewModel.redirectURI.absoluteString)")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -142,7 +144,11 @@ struct OuraSettingsView: View {
                                 viewModel.lastErrorMessage = error.localizedDescription
                             }
                         }
-                        .disabled(viewModel.isAuthorising || viewModel.clientID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        .disabled(
+                            viewModel.isAuthorising ||
+                                viewModel.clientID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                                viewModel.clientSecret.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                        )
 
                         Button(viewModel.isSyncing ? "Syncing…" : "Sync now") {
                             Task {
