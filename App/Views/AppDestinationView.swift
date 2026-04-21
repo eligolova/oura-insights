@@ -164,6 +164,16 @@ struct OuraSettingsView: View {
                     }
                     Text(viewModel.syncSummary)
                         .foregroundStyle(.secondary)
+                    if let lastAuthorisationURLString = viewModel.lastAuthorisationURLString {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Last Oura authorize URL")
+                                .font(.caption.weight(.semibold))
+                            Text(lastAuthorisationURLString)
+                                .font(.caption.monospaced())
+                                .textSelection(.enabled)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                     if let lastErrorMessage = viewModel.lastErrorMessage {
                         Text(lastErrorMessage)
                             .foregroundStyle(.red)

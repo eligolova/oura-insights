@@ -16,6 +16,7 @@ final class OuraSessionViewModel {
     var lastErrorMessage: String?
     var connectionSummary = "Not connected"
     var syncSummary = "No Oura sync has been run yet."
+    var lastAuthorisationURLString: String?
     var latestSleepSummary = "No sleep data imported yet."
     var latestReadinessSummary = "No readiness data imported yet."
 
@@ -78,7 +79,7 @@ final class OuraSessionViewModel {
         isAuthorising = true
         lastErrorMessage = nil
 
-        return try authClient.makeAuthorisationURL(
+        let url = try authClient.makeAuthorisationURL(
             request: OuraAuthorisationRequest(
                 clientID: clientID.trimmingCharacters(in: .whitespacesAndNewlines),
                 redirectURI: redirectURI,
@@ -86,6 +87,9 @@ final class OuraSessionViewModel {
                 state: state
             )
         )
+        lastAuthorisationURLString = url.absoluteString
+        syncSummary = "Waiting for Oura. If the browser shows 400 invalid_request, check the client ID and exact redirect URI in the Oura dashboard."
+        return url
     }
 
     func handleIncomingURL(_ url: URL) async {
@@ -103,6 +107,7 @@ final class OuraSessionViewModel {
             try persistTokenMetadata(token)
             pendingState = nil
             isAuthorising = false
+            lastAuthorisationURLString = nil
             refreshLocalState()
             await refresh()
         } catch {
@@ -136,6 +141,7 @@ final class OuraSessionViewModel {
             isAuthorising = false
             isSyncing = false
             lastErrorMessage = nil
+            lastAuthorisationURLString = nil
             refreshLocalState()
         } catch {
             pendingState = nil
