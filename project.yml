@@ -18,6 +18,12 @@ targets:
     platform: macOS
     info:
       path: App/AppEntry/macOS/Info.plist
+      properties:
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+            CFBundleURLName: dev.codex.oura-insights.oauth
+            CFBundleURLSchemes:
+              - oura-insights
     sources:
       - path: App/AppEntry/macOS
       - path: App/Views
@@ -40,6 +46,12 @@ targets:
     platform: iOS
     info:
       path: App/AppEntry/iOS/Info.plist
+      properties:
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+            CFBundleURLName: dev.codex.oura-insights.oauth
+            CFBundleURLSchemes:
+              - oura-insights
     sources:
       - path: App/AppEntry/iOS
       - path: App/Views
