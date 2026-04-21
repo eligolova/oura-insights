@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Returning to OuraInsights</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5efe6;
+      --panel: #fffaf4;
+      --text: #1f1a17;
+      --muted: #665c55;
+      --line: #d8cbc0;
+      --accent: #6a4f3b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: "Iowan Old Style", "Palatino Linotype", serif;
+      background: linear-gradient(180deg, #efe5d7 0%, var(--bg) 55%, #f8f3ec 100%);
+      color: var(--text);
+    }
+
+    main {
+      width: min(680px, 100%);
+      background: rgba(255, 250, 244, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(63, 46, 33, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Returning to OuraInsights</h1>
+    <p id="status">Opening the OuraInsights app to finish sign-in.</p>
+    <p>If the app does not open automatically, <a id="fallback" href="#">open OuraInsights manually</a>.</p>
+  </main>
+
+  <script>
+    const appURL = `oura-insights://oauth/callback${window.location.search}`;
+    const fallback = document.getElementById("fallback");
+    const status = document.getElementById("status");
+
+    fallback.href = appURL;
+
+    if (!window.location.search) {
+      status.textContent = "No Oura sign-in response was found in this callback URL.";
+    } else {
+      window.location.replace(appURL);
+    }
+  </script>
+</body>
+</html>
