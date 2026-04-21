@@ -89,13 +89,13 @@ struct OuraAuthClient {
         }
 
         var components = URLComponents(url: authoriseURL, resolvingAgainstBaseURL: false)
-        components?.queryItems = [
+        components?.percentEncodedQuery = Self.percentEncodedQuery([
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "client_id", value: request.clientID),
             URLQueryItem(name: "redirect_uri", value: request.redirectURI.absoluteString),
             URLQueryItem(name: "scope", value: request.scopes.joined(separator: " ")),
             URLQueryItem(name: "state", value: request.state)
-        ]
+        ])
 
         guard let url = components?.url else {
             throw OuraAuthError.invalidRedirect
@@ -175,10 +175,30 @@ struct OuraAuthClient {
     }
 
     private static func formEncodedBody(_ items: [URLQueryItem]) -> Data? {
-        var components = URLComponents()
-        components.queryItems = items
-        return components.percentEncodedQuery?.data(using: .utf8)
+        percentEncodedQuery(items).data(using: .utf8)
     }
+
+    private static func percentEncodedQuery(_ items: [URLQueryItem]) -> String {
+        items
+            .compactMap { item in
+                guard let encodedName = item.name.addingPercentEncoding(withAllowedCharacters: .ouraQueryAllowed) else {
+                    return nil
+                }
+
+                let encodedValue = item.value?
+                    .addingPercentEncoding(withAllowedCharacters: .ouraQueryAllowed) ?? ""
+                return "\(encodedName)=\(encodedValue)"
+            }
+            .joined(separator: "&")
+    }
+}
+
+private extension CharacterSet {
+    static let ouraQueryAllowed: CharacterSet = {
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.remove(charactersIn: ":/?#[]@!$&'()*+,;=% ")
+        return allowed
+    }()
 }
 
 private struct OuraTokenResponse: Decodable {

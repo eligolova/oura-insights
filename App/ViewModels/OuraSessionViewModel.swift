@@ -133,8 +133,14 @@ final class OuraSessionViewModel {
             try tokenStore.clear()
             try clearPersistedTokenMetadata()
             pendingState = nil
+            isAuthorising = false
+            isSyncing = false
+            lastErrorMessage = nil
             refreshLocalState()
         } catch {
+            pendingState = nil
+            isAuthorising = false
+            isSyncing = false
             lastErrorMessage = error.localizedDescription
         }
     }
