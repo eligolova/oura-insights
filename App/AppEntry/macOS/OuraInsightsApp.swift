@@ -6,7 +6,7 @@ struct OuraInsightsMacOSApp: App {
     private let appContainer = AppContainer.shared
 
     var body: some Scene {
-        WindowGroup {
+        Window("Oura Insights", id: "main") {
             RootAppView()
                 .environment(appContainer)
                 .modelContainer(appContainer.modelContainer)
